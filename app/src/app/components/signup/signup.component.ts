@@ -45,12 +45,12 @@ export class SignupComponent implements OnInit {
             duration: 3000,
             panelClass: ['green-snackbar'],
           });
-
+         
           this.router.navigate(['login']);
           this.signUpForm.reset();
         },
         error: (err) => {
-     
+
 
           this.snackbar.open(`${err?.error.message}`, undefined, {
             duration: 3000,

@@ -52,7 +52,9 @@ export class LoginComponent implements OnInit {
             panelClass: ['green-snackbar'],
           });
           this.loginForm.reset();
-          this.router.navigate(['dashboard']);
+          setTimeout(() => {
+            this.router.navigate(['dashboard']);
+          }, 2000);
         },
         error: (err) => {
           this.snackbar.open(`${err.error.message}`, undefined, {
@@ -65,20 +67,13 @@ export class LoginComponent implements OnInit {
       // throw the error using snackbar
       console.log('Form is invalid');
 
-
-
       ValidateForm.validateAllFormFileds(this.loginForm);
       // alert('Form is invalid');
-
-
 
       this.snackbar.open('Invalid Form', undefined, {
         duration: 3000,
         panelClass: ['red-snackbar'],
       });
-
-
-
     }
   }
 }
