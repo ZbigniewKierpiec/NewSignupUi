@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import ValidateForm from 'src/app/helpers/validateForm';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -14,7 +14,12 @@ export class SignupComponent implements OnInit {
   isText: boolean = false;
   eyeIcon: string = 'fa-eye-slash';
   signUpForm!: FormGroup;
-  constructor(private fb: FormBuilder, private auth: AuthService , private router:Router ) {}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+    private snackbar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -35,8 +40,11 @@ export class SignupComponent implements OnInit {
   onSignUp() {
     if (this.signUpForm.valid) {
       this.auth.signUp(this.signUpForm.value).subscribe({
-        next(res) {
-          alert(res.message);
+        next: (res) => {
+          this.snackbar.open(`${res.message}`, undefined, {
+            duration: 3000,
+            panelClass: ['green-snackbar'],
+          });
         },
         error(err) {
           alert(err?.error.message);

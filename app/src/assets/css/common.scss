@@ -1,4 +1,5 @@
 .outer {
+  position: relative;
   height: 100vh;
   background: linear-gradient(to top, #c9c9ff 50%, #6e6ef6) no-repeat;
 }
@@ -90,3 +91,23 @@ img {
 .error{
   border: 1px solid red !important;
 }
+.green-snackbar{
+  font-family: monospace;
+  background-color: green;
+  color: white;
+  position: absolute !important;
+  top:  2%;
+  left: 50%;
+  transform: translate(-50% , -2%) !important;
+  color: white;
+}
+
+ .red-snackbar{
+  font-family: monospace;
+  background-color: red;
+  position: absolute !important;
+  top:  2%;
+  left: 50%;
+  transform: translate(-50% , -2%) !important;
+  color: white;
+ }

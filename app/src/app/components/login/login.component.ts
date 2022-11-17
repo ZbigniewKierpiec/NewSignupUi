@@ -1,6 +1,5 @@
 import ValidateForm from 'src/app/helpers/validateForm';
 
-
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +9,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,12 @@ export class LoginComponent implements OnInit {
   isText: boolean = false;
   eyeIcon: string = 'fa-eye-slash';
   loginForm!: FormGroup;
-  constructor(private fb: FormBuilder , private auth:AuthService , private router:Router ) {}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+    private snackbar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -39,26 +44,41 @@ export class LoginComponent implements OnInit {
   onLogin() {
     if (this.loginForm.valid) {
       // Send to obj to database
-      this.auth.login(this.loginForm.value)
-      .subscribe({
-        next(res) {
-          alert(res.message)
+      this.auth.login(this.loginForm.value).subscribe({
+        next: (res) => {
+          // alert(res.message)
+          this.snackbar.open(`${res.message}`, undefined, {
+            duration: 3000,
+            panelClass: ['green-snackbar'],
+          });
+          this.loginForm.reset();
+          this.router.navigate(['dashboard']);
         },
-        error(err) {
-          alert(err?.error.message)
+        error: (err) => {
+          this.snackbar.open(`${err.error.message}`, undefined, {
+            duration: 3000,
+            panelClass: ['red-snackbar'],
+          });
         },
-      })
-
-
-      console.log(this.loginForm.value);
-      this.loginForm.reset()
-      this.router.navigate(['dashboard'])
+      });
     } else {
       // throw the error using snackbar
       console.log('Form is invalid');
-    ValidateForm.validateAllFormFileds(this.loginForm);
-      alert('Form is invalid');
+
+
+
+      ValidateForm.validateAllFormFileds(this.loginForm);
+      // alert('Form is invalid');
+
+
+
+      this.snackbar.open('Invalid Form', undefined, {
+        duration: 3000,
+        panelClass: ['red-snackbar'],
+      });
+
+
+
     }
   }
-
 }
