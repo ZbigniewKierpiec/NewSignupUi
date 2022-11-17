@@ -37,7 +37,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       // Send to obj to database
+
       console.log(this.loginForm.value);
+      this.loginForm.reset()
     } else {
       // throw the error using snackbar
       console.log('Form is invalid');

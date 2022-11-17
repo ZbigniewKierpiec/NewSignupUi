@@ -45,7 +45,7 @@ onSignUp(){
 if(this.signUpForm.valid){
 
 console.log(this.signUpForm.value)
-
+this.signUpForm.reset()
 }else{
 
 // logic for throwing a error
