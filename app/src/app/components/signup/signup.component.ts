@@ -45,14 +45,21 @@ export class SignupComponent implements OnInit {
             duration: 3000,
             panelClass: ['green-snackbar'],
           });
+
+          this.router.navigate(['login']);
+          this.signUpForm.reset();
         },
-        error(err) {
-          alert(err?.error.message);
+        error: (err) => {
+     
+
+          this.snackbar.open(`${err?.error.message}`, undefined, {
+            duration: 3000,
+            panelClass: ['red-snackbar'],
+          });
         },
       });
-      console.log(this.signUpForm.value);
-      this.signUpForm.reset();
-      this.router.navigate(['login']);
+
+
     } else {
       // logic for throwing a error
       ValidateForm.validateAllFormFileds(this.signUpForm);
