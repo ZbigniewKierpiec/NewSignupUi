@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
             panelClass: ['green-snackbar'],
           });
           this.loginForm.reset();
+          this.auth.storeToken(res.token);
           setTimeout(() => {
             this.router.navigate(['dashboard']);
           }, 2000);

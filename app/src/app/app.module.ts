@@ -1,4 +1,8 @@
-import { HttpClient , HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -49,9 +53,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, DashboardComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    SignupComponent,
+    DashboardComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -96,7 +106,13 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatTableModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -3,6 +3,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,15 +14,21 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-
+  public users:any=[];
   constructor(
     private observer: BreakpointObserver,
     private router: Router,
     private snackbar: MatSnackBar,
-
+    private auth: AuthService,
+    private api: ApiService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   this.api.getUsers()
+  .subscribe(res=>{
+    this.users = res;
+  })
+  }
 
   ngAfterViewInit() {
     this.observer.observe(['(max-width:800px)']).subscribe((res) => {
@@ -35,17 +43,15 @@ export class DashboardComponent implements OnInit {
   }
 
   logOut() {
-
     this.snackbar.open('You just logout', undefined, {
       duration: 3000,
       panelClass: ['red-snackbar'],
     });
 
-
     setTimeout(() => {
       this.router.navigate(['login']);
     }, 1000);
 
-
+    this.auth.signOut();
   }
 }
