@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   public users:any=[];
+  public tokenUser:any=[];
   constructor(
     private observer: BreakpointObserver,
     private router: Router,
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit {
   .subscribe(res=>{
     this.users = res;
   })
+
   }
 
   ngAfterViewInit() {

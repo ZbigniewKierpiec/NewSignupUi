@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
           }, 2000);
         },
         error: (err) => {
-          this.snackbar.open(`${err.error.message}`, undefined, {
+          this.snackbar.open('User not Found', undefined, {
             duration: 3000,
             panelClass: ['red-snackbar'],
           });
